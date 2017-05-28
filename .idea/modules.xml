@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Avro.iml" filepath="$PROJECT_DIR$/.idea/modules/Avro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Avro_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Avro_main.iml" group="Avro" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Avro_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Avro_test.iml" group="Avro" />
+    </modules>
+  </component>
+</project>
