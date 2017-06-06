@@ -1,0 +1,115 @@
+package core;
+
+option java_package = "com.openbet.platform.activityfeeds.model.core";
+option java_outer_classname = "CoreModel";
+
+//A class for holding batches of activity messages. In addition,
+//it has monitoring capabilities thanks to the embedded monitoring
+//object.
+message Batch {
+  required string uniqueId = 1;
+  repeated Activity messages = 2;
+  optional Monitoring monitoring = 3;
+}
+
+
+message Activity {
+
+  message ActivityHeader {
+
+    required int64 activityId = 1;
+    optional int64 timeStamp = 2;
+    optional CrudType crudType = 3;
+    optional SequencingKey sequencingKey = 4;
+    optional int64 queueId = 5;
+    optional bytes payload = 6;
+    optional string uniqueId = 7;
+    optional ActivityDescriptor activityDescriptor = 8;
+    optional int64 firstSentTime = 9;
+    optional int32 sendRetries = 10;
+
+    optional string contextRef = 11;
+    optional string publisherRef = 12;
+    optional string operatorRef = 14;
+
+    //Not populated by default.
+    optional string operatorName = 16;
+
+    optional Monitoring monitoring = 13;
+    optional int64 correlationId = 15;
+
+  }
+
+  //An enumeration of all the possible creation types
+  //that an activity message can have.
+  enum CrudType {
+    CREATE = 1;
+    READ = 2;
+    UPDATE = 3;
+    DELETE = 4;
+    INSERT = 5; //Used for sports feed which uses INSERT as CREATE crud type
+    PURGE = 6; //Used for sending messages with null payload in compacted topics from daos
+  }
+
+  required ActivityHeader header = 1;
+
+  // Core OpenBet Feeds
+  extensions 200 to 2047;
+
+  // Partner Feeds
+  extensions 2048 to 10000;
+
+  // Custom Extensions
+  extensions 10001 to 18999;
+
+  // Extensions 19000 - 19999 are reserved!!
+}
+
+message SequencingKey {
+  optional SequencingDescriptor sequencingDescriptor = 1;
+  optional int32 sequencingId = 2;
+}
+
+message ActivityDescriptor {
+  required int32 id = 1;
+  required string name = 2;
+  optional string description = 3;
+}
+
+message SequencingDescriptor {
+  required int32 id = 1;
+  required string name = 2;
+  optional string description = 3;
+}
+
+//A class being used to monitor an activity while it is processed.
+//These values can be used for statistical analysis.
+message Monitoring {
+  optional int64 initializeAtCollector = 1;
+  optional int64 beforeSubmitToComposer = 2;
+  optional int64 startComposerQuery = 3;
+  optional int64 endComposerQuery = 4;
+  optional int64 orchestratorReceive = 5;
+  optional int64 orchestratorSend = 6;
+  optional int64 startProcessing = 7;
+  optional int64 endProcessing = 8;
+}
+
+message Source {
+  optional string channelRef = 1;
+  optional string siteRef = 2;
+  optional string jurisdictionRef = 3;
+  optional string productRef = 4;
+  optional string platformRef = 5;
+  optional string deviceRef = 6;
+  optional string ipAddr = 7;
+  optional string terminalRef = 8;
+}
+
+// Used to store references to external systems
+message ExternalRef {
+  required string provider = 1;
+  required string id = 2;
+  optional string refType = 3;
+  optional string uri = 4;
+}

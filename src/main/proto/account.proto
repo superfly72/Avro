@@ -1,0 +1,63 @@
+import "core.proto";
+
+package account;
+
+option java_package = "com.openbet.platform.activityfeeds.model.account";
+option java_outer_classname = "AccountModel";
+
+extend core.Activity {
+    optional AccountState state = 205;
+}
+
+message ManualAdjustment {
+
+    message LinkedTransaction{
+        optional string typeRef = 1;
+        optional string ref = 2;
+    }
+
+    message Money {
+        required string currencyRef = 1;
+        required string amount = 2;
+    }
+
+    required string id = 1 ;
+    optional string creationDate = 2;
+    optional string accountRef = 3;
+    optional string customerRef = 4;
+    //Monetary amount added to the customer's account in the customer's currency -
+    //Ten euros and fifty cents would be expressed as "10.50"
+    optional Money amount = 5;
+    //typeRef examples: BETC, RCHQ, SCHQ, CSH, CADJ, LGND, GWILL,
+    // WOFF, BNKC, AFF, FBET, ONCR, MCM, REPL, RMT
+    optional string typeRef = 6;
+    //this is a finer grained break down of the typeRef
+    optional string subTypeRef = 7;
+    optional bool withdrawable = 8;
+    optional string description = 9;
+    //this is the batch that the adjustment was processed in.
+    //Refers to a batch of manual bets uploaded at the same time
+    optional string batchRef = 10;
+    //notes from the operator
+    optional string operatorNotes = 11;
+    //which admin user authorised this man adj
+    optional string authorisedByUserRef = 12;
+    //when the man adj was authorised
+    optional string authorisedDate = 13;
+    //which admin user authorised this man adj
+    optional string postedByUserRef = 14;
+    //when the man adj was posted i.e. money given to customer
+    optional string postedDate = 15;
+    //which admin user declined this man adj
+    optional string declinedByUserRef = 16;
+    //when the man adj was declined
+    optional string declinedDate = 17;
+    //Provider: OPENBET
+    //Ref types: BET, PMT
+    optional core.ExternalRef linkedTransaction = 18;
+    optional string userRef = 19;
+}
+
+message AccountState {
+    optional ManualAdjustment manualAdjustment  = 1;
+}

@@ -3,7 +3,7 @@ hs_err_pid*
 replay_pid*
 
 ### Gradle template
-.gradle
+.gradle/
 build/
 classes/
 
